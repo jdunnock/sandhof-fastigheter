@@ -1,0 +1,148 @@
+---
+import Layout from '../layouts/Layout.astro'
+---
+
+<Layout title="Kontakt" description="Kontakta Sandhof Fastigheter i Skövde — intresseanmälan och felanmälan.">
+  <section class="max-w-3xl mx-auto px-6 pt-16 pb-20">
+    <p class="text-xs uppercase tracking-widest text-stone-400 mb-3">Kontakt</p>
+    <h1 class="text-3xl sm:text-4xl font-semibold text-stone-900 mb-4">Hör av dig till oss</h1>
+    <p class="text-stone-500 max-w-prose leading-relaxed mb-12">
+      Lägenheter tillsätts snabbt och vi annonserar sällan. Skicka en intresseanmälan nedan — eller hör av dig direkt.
+    </p>
+
+    <div class="grid sm:grid-cols-2 gap-12">
+      <!-- Contact form -->
+      <div>
+        <h2 class="font-semibold text-stone-900 mb-6">Intresseanmälan</h2>
+        <form
+          id="interest-form"
+          class="space-y-4"
+          novalidate
+        >
+          <div>
+            <label for="name" class="block text-sm font-medium text-stone-700 mb-1">Namn</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              required
+              autocomplete="name"
+              class="w-full border border-stone-200 rounded px-3 py-2 text-sm focus:outline-none focus:border-stone-500 transition-colors"
+              placeholder="Ditt namn"
+            />
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-stone-700 mb-1">E-post</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              autocomplete="email"
+              class="w-full border border-stone-200 rounded px-3 py-2 text-sm focus:outline-none focus:border-stone-500 transition-colors"
+              placeholder="din@epost.se"
+            />
+          </div>
+          <div>
+            <label for="phone" class="block text-sm font-medium text-stone-700 mb-1">Telefon <span class="text-stone-400">(valfritt)</span></label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              autocomplete="tel"
+              class="w-full border border-stone-200 rounded px-3 py-2 text-sm focus:outline-none focus:border-stone-500 transition-colors"
+              placeholder="070-000 00 00"
+            />
+          </div>
+          <div>
+            <label for="message" class="block text-sm font-medium text-stone-700 mb-1">Meddelande</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              class="w-full border border-stone-200 rounded px-3 py-2 text-sm focus:outline-none focus:border-stone-500 transition-colors resize-none"
+              placeholder="Berätta kort om vad du letar efter — storlek, läge, inflyttningsdatum..."
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="w-full py-2.5 bg-stone-900 text-white text-sm font-medium rounded hover:bg-stone-700 transition-colors disabled:opacity-50"
+          >
+            Skicka intresseanmälan
+          </button>
+          <p id="form-feedback" class="text-sm text-center hidden"></p>
+        </form>
+      </div>
+
+      <!-- Direct contact -->
+      <div class="space-y-8">
+        <div>
+          <h2 class="font-semibold text-stone-900 mb-4">Direktkontakt</h2>
+          <p class="text-stone-500 text-sm leading-relaxed mb-4">
+            Du når oss direkt — inte via ett callcenter eller ett ärendesystem.
+          </p>
+          <ul class="space-y-3 text-sm">
+            <li>
+              <span class="text-stone-400 block text-xs uppercase tracking-widest mb-0.5">E-post</span>
+              <a href="mailto:info@sandhoffastigheter.se" class="text-stone-800 hover:text-stone-600">
+                info@sandhoffastigheter.se
+              </a>
+            </li>
+            <li>
+              <span class="text-stone-400 block text-xs uppercase tracking-widest mb-0.5">Telefon</span>
+              <a href="tel:0500000000" class="text-stone-800 hover:text-stone-600">
+                0500-000 000
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-stone-50 rounded p-5">
+          <p class="font-medium text-stone-900 mb-1 text-sm">Felanmälan</p>
+          <p class="text-stone-500 text-sm leading-relaxed">
+            Bor du hos oss och vill anmäla ett fel? Hör av dig via e-post eller telefon så hanterar vi det snabbt.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const form = document.getElementById('interest-form') as HTMLFormElement
+  const feedback = document.getElementById('form-feedback') as HTMLElement
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    const btn = form.querySelector('button[type=submit]') as HTMLButtonElement
+    btn.disabled = true
+    btn.textContent = 'Skickar...'
+
+    const data = {
+      name: (form.elements.namedItem('name') as HTMLInputElement).value.trim(),
+      email: (form.elements.namedItem('email') as HTMLInputElement).value.trim(),
+      phone: (form.elements.namedItem('phone') as HTMLInputElement).value.trim(),
+      message: (form.elements.namedItem('message') as HTMLTextAreaElement).value.trim(),
+    }
+
+    try {
+      const res = await fetch('/api/interest', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+      if (res.ok) {
+        feedback.textContent = 'Tack! Vi hör av oss inom kort.'
+        feedback.className = 'text-sm text-center text-green-700'
+        form.reset()
+      } else {
+        throw new Error('server error')
+      }
+    } catch {
+      feedback.textContent = 'Något gick fel. Försök igen eller kontakta oss direkt.'
+      feedback.className = 'text-sm text-center text-red-600'
+      btn.disabled = false
+      btn.textContent = 'Skicka intresseanmälan'
+    }
+    feedback.classList.remove('hidden')
+  })
+</script>

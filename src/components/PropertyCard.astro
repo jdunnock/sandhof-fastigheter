@@ -1,0 +1,37 @@
+---
+import type { Property } from '../content/properties'
+
+interface Props {
+  property: Property
+  /** Base URL for dellmander-inside image API */
+  apiBase?: string
+}
+
+const { property, apiBase = import.meta.env.PUBLIC_DELLMANDER_API_URL ?? '' } = Astro.props
+const imgSrc = property.heroImage
+  ? `${apiBase}/api/gallery-images/${property.heroImage}`
+  : '/images/placeholder-property.jpg'
+---
+
+<article class="group bg-white border border-stone-100 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+  <a href={`/fastigheter/${property.slug}`}>
+    <div class="aspect-[4/3] bg-stone-100 overflow-hidden">
+      <img
+        src={imgSrc}
+        alt={property.name}
+        class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+        loading="lazy"
+      />
+    </div>
+    <div class="p-5">
+      <p class="text-xs uppercase tracking-widest text-stone-400 mb-1">
+        {property.address}{property.apartments > 0 ? ` · ${property.apartments} lgh` : ''}
+      </p>
+      <h3 class="font-semibold text-stone-900 text-lg mb-2">{property.name}</h3>
+      <p class="text-stone-500 text-sm leading-relaxed line-clamp-3">{property.description}</p>
+      <span class="inline-block mt-4 text-sm font-medium text-stone-900 underline underline-offset-2">
+        Visa fastigheten →
+      </span>
+    </div>
+  </a>
+</article>
