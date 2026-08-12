@@ -1,37 +1,34 @@
 # Skill: deploy-workflow
 
-Deploya sandhof-fastigheter till produktion.
+Deploya sandhof-fastigheter till Railway.
 
-## Rekommenderad hosting: Vercel (eller Netlify)
+## Arkitektur
+Astro bygger en statisk `dist/`-mapp. Railway kör `serve dist` som staticfile-server.
 
-Astro-sajten är statisk (SSG) — ingen server krävs. Vercel är enklast.
+## Viktiga filer
+- `railway.toml` — build + start-kommandon
+- `nixpacks.toml` — Node-provider, npm ci + npm run build
+- `package.json` `start`-script: `serve dist --listen 0.0.0.0:${PORT:-3000}`
 
-### Vercel
-```bash
-npx vercel --prod
+## Env-variabler att sätta i Railway-projektet
 ```
-Eller koppla GitHub-repot i Vercel-dashboarden för automatisk deploy på push till `main`.
+PUBLIC_DELLMANDER_API_URL = https://<dellmander-inside>.railway.app
+```
+⚠️ Denna variabel bakas in vid **build-tid** (Astro SSG). En ändring kräver ny deploy.
 
-**Viktiga env-variabler att sätta i Vercel:**
-```
-PUBLIC_DELLMANDER_API_URL = https://din-app.railway.app
-```
-
-### Netlify
-```bash
-npm run build
-# Publicera dist/-mappen till Netlify
-```
+## Deploy-flöde
+1. Koppla GitHub-repot till ett nytt Railway-projekt
+2. Sätt `PUBLIC_DELLMANDER_API_URL` under Variables
+3. Railway kör automatiskt `npm run build` + `npm start` vid push till main
 
 ## Pre-deploy checklist
-1. `npm run build` — ska inte ge TypeScript-fel
-2. Kontrollera att `PUBLIC_DELLMANDER_API_URL` är satt i hosting-plattformens miljövariabler
+1. `npm run build` lokalt — ska inte ge TypeScript-fel
+2. Kontrollera att `PUBLIC_DELLMANDER_API_URL` är satt i Railway Variables
 3. Kontrollera att dellmander-inside är live och att bildroutes svarar
 
 ## Rollback
-Vercel: välj tidigare deployment i dashboarden → "Promote to Production".
-Netlify: samma via Deploys → välj tidigare deploy → "Publish deploy".
+Railway dashboard → välj tidigare deployment → "Redeploy".
 
 ## Domän
 Produktionsdomän: `sandhoffastigheter.se`
-Uppdatera `site` i `astro.config.mjs` vid byte av domän (påverkar sitemap).
+Uppdatera `site` i `astro.config.mjs` vid byte av domän.
