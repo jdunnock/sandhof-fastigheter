@@ -41,48 +41,48 @@ const tenantValues = [
 <Layout title="Välkommen">
   <!-- Hero -->
   <section class="max-w-5xl mx-auto px-6 pt-20 pb-16 sm:pt-28 sm:pb-24">
-    <p class="text-xs uppercase tracking-widest text-stone-400 mb-6">Skövde · Sedan 2010</p>
-    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold text-stone-900 leading-tight max-w-2xl mb-8">
+    <p class="text-xs uppercase tracking-widest text-ink-muted mb-6">Skövde · Sedan 2010</p>
+    <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-semibold text-ink leading-tight max-w-2xl mb-8">
       Fastigheter vi själva vill vara stolta över.
     </h1>
-    <p class="text-stone-500 text-lg max-w-xl mb-10 leading-relaxed">
+    <p class="text-ink-muted text-lg max-w-xl mb-10 leading-relaxed">
       Vi äger och sköter sju fastigheter i Skövde. Personligt engagerade i varje byggnad, med blicken på lång sikt.
     </p>
     <div class="flex flex-wrap gap-4">
-      <a href="/fastigheter" class="px-6 py-3 bg-stone-900 text-white text-sm font-medium rounded hover:bg-stone-700 transition-colors">
+      <a href="/fastigheter" class="px-6 py-3 bg-forest text-white text-sm font-medium rounded hover:opacity-90 transition-opacity">
         Våra fastigheter
       </a>
-      <a href="/om-oss" class="px-6 py-3 border border-stone-300 text-stone-700 text-sm font-medium rounded hover:border-stone-500 transition-colors">
+      <a href="/om-oss" class="px-6 py-3 border border-cream-border text-ink text-sm font-medium rounded hover:border-ink-muted transition-colors">
         Om oss
       </a>
     </div>
   </section>
 
   <!-- Properties -->
-  <section class="max-w-5xl mx-auto px-6 py-16 border-t border-stone-100">
-    <p class="text-xs uppercase tracking-widest text-stone-400 mb-3">Sju fastigheter i Skövde</p>
-    <h2 class="text-2xl sm:text-3xl font-semibold text-stone-900 mb-10">Välskötta byggnader med karaktär</h2>
+  <section class="max-w-5xl mx-auto px-6 py-16 border-t border-cream-border">
+    <p class="text-xs uppercase tracking-widest text-ink-muted mb-3">Sju fastigheter i Skövde</p>
+    <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ink mb-10">Välskötta byggnader med karaktär</h2>
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {featured.map(p => <PropertyCard property={p} />)}
     </div>
     <div class="mt-10">
-      <a href="/fastigheter" class="text-sm font-medium text-stone-900 underline underline-offset-2 hover:text-stone-600">
+      <a href="/fastigheter" class="text-sm font-medium text-forest underline underline-offset-2 hover:opacity-70">
         Se alla fastigheter →
       </a>
     </div>
   </section>
 
   <!-- Principles -->
-  <section class="bg-stone-50 py-20 mt-8">
+  <section class="bg-cream-dark py-20 mt-8">
     <div class="max-w-5xl mx-auto px-6">
-      <p class="text-xs uppercase tracking-widest text-stone-400 mb-3">Hur vi tänker</p>
-      <h2 class="text-2xl sm:text-3xl font-semibold text-stone-900 mb-12">Tre saker vi tror på som fastighetsägare</h2>
+      <p class="text-xs uppercase tracking-widest text-ink-muted mb-3">Hur vi tänker</p>
+      <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ink mb-12">Tre saker vi tror på som fastighetsägare</h2>
       <div class="grid sm:grid-cols-3 gap-10">
         {principles.map(p => (
           <div>
-            <p class="text-3xl font-light text-stone-300 mb-4">{p.num}</p>
-            <h3 class="font-semibold text-stone-900 mb-3">{p.title}</h3>
-            <p class="text-stone-500 text-sm leading-relaxed">{p.text}</p>
+            <p class="text-3xl font-light text-cream-border mb-4">{p.num}</p>
+            <h3 class="font-serif font-semibold text-ink mb-3">{p.title}</h3>
+            <p class="text-ink-muted text-sm leading-relaxed">{p.text}</p>
           </div>
         ))}
       </div>
@@ -91,20 +91,20 @@ const tenantValues = [
 
   <!-- Sustainability -->
   <section class="max-w-5xl mx-auto px-6 py-20">
-    <p class="text-xs uppercase tracking-widest text-stone-400 mb-3">Hållbarhet börjar i vardagen</p>
-    <h2 class="text-2xl sm:text-3xl font-semibold text-stone-900 max-w-xl mb-12">
+    <p class="text-xs uppercase tracking-widest text-ink-muted mb-3">Hållbarhet börjar i vardagen</p>
+    <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ink max-w-xl mb-12">
       Många små, förnuftiga beslut skapar bättre fastigheter över tid.
     </h2>
-    <p class="text-stone-500 max-w-prose mb-12 leading-relaxed">
+    <p class="text-ink-muted max-w-prose mb-12 leading-relaxed">
       Vi har inga stora hållbarhetsmål att presentera. Men vi arbetar praktiskt och ansvarsfullt i det dagliga underhållet — och det gör skillnad på sikt.
     </p>
     <div class="grid sm:grid-cols-2 gap-8">
       {sustainability.map(s => (
         <div class="flex gap-4">
-          <div class="w-8 h-8 rounded-full bg-stone-100 flex-shrink-0 mt-0.5"></div>
+          <div class="w-8 h-8 rounded-full bg-forest-light border border-forest-ring flex-shrink-0 mt-0.5"></div>
           <div>
-            <p class="font-medium text-stone-900 mb-1">{s.title}</p>
-            <p class="text-stone-500 text-sm">{s.text}</p>
+            <p class="font-medium text-ink mb-1">{s.title}</p>
+            <p class="text-ink-muted text-sm">{s.text}</p>
           </div>
         </div>
       ))}
@@ -112,32 +112,32 @@ const tenantValues = [
   </section>
 
   <!-- Team -->
-  <section class="bg-stone-900 text-white py-20">
+  <section class="bg-ink text-cream py-20">
     <div class="max-w-5xl mx-auto px-6">
-      <p class="text-xs uppercase tracking-widest text-stone-400 mb-3">Personerna bakom Sandhof</p>
-      <h2 class="text-2xl sm:text-3xl font-semibold mb-12 max-w-xl leading-snug">
+      <p class="text-xs uppercase tracking-widest text-ink-faint mb-3">Personerna bakom Sandhof</p>
+      <h2 class="font-serif text-2xl sm:text-3xl font-semibold mb-12 max-w-xl leading-snug">
         Vi är inte ett anonymt bolag — vi är ägarna, och vi är med i det dagliga arbetet.
       </h2>
       <div class="grid sm:grid-cols-2 gap-12">
         <div>
-          <div class="w-12 h-12 rounded-full bg-stone-700 flex items-center justify-center text-sm font-semibold text-stone-300 mb-4">AS</div>
-          <p class="font-semibold text-white">Anders Sandhof</p>
-          <p class="text-xs uppercase tracking-widest text-stone-400 mt-1 mb-4">Grundare &amp; ägare</p>
-          <blockquote class="text-stone-300 text-sm leading-relaxed italic mb-4">
-            "Jag har alltid trott att en fastighet som sköts ordentligt är en fastighet folk vill bo kvar i. Det är lika mycket en fråga om respekt som om ekonomi."
+          <div class="w-12 h-12 rounded-full bg-ink-faint/40 flex items-center justify-center text-sm font-semibold text-ink-muted mb-4">AS</div>
+          <p class="font-serif font-semibold text-cream">Anders Sandhof</p>
+          <p class="text-xs uppercase tracking-widest text-ink-faint mt-1 mb-4">Grundare &amp; ägare</p>
+          <blockquote class="text-ink-muted text-sm leading-relaxed italic mb-4">
+            „Jag har alltid trott att en fastighet som sköts ordentligt är en fastighet folk vill bo kvar i. Det är lika mycket en fråga om respekt som om ekonomi.“
           </blockquote>
-          <p class="text-stone-400 text-sm leading-relaxed">
+          <p class="text-ink-muted text-sm leading-relaxed">
             Anders grundade Sandhof 2010 och är involverad i den dagliga förvaltningen. Han känner varje fastighet inifrån och ut — bokstavligen.
           </p>
         </div>
         <div>
-          <div class="w-12 h-12 rounded-full bg-stone-700 flex items-center justify-center text-sm font-semibold text-stone-300 mb-4">MS</div>
-          <p class="font-semibold text-white">Maria Sandhof</p>
-          <p class="text-xs uppercase tracking-widest text-stone-400 mt-1 mb-4">Ägare, ekonomi &amp; uthyrning</p>
-          <blockquote class="text-stone-300 text-sm leading-relaxed italic mb-4">
-            "Jag vill att de som bor hos oss ska känna att deras hem tas om hand. Det är det enklaste sättet att förklara vad vi gör."
+          <div class="w-12 h-12 rounded-full bg-ink-faint/40 flex items-center justify-center text-sm font-semibold text-ink-muted mb-4">MS</div>
+          <p class="font-serif font-semibold text-cream">Maria Sandhof</p>
+          <p class="text-xs uppercase tracking-widest text-ink-faint mt-1 mb-4">Ägare, ekonomi &amp; uthyrning</p>
+          <blockquote class="text-ink-muted text-sm leading-relaxed italic mb-4">
+            „Jag vill att de som bor hos oss ska känna att deras hem tas om hand. Det är det enklaste sättet att förklara vad vi gör.“
           </blockquote>
-          <p class="text-stone-400 text-sm leading-relaxed">
+          <p class="text-ink-muted text-sm leading-relaxed">
             Maria ansvarar för ekonomi, hyresavtal och kontakten med hyresgäster. Tydlighet och tillgänglighet är hennes ledord.
           </p>
         </div>
@@ -147,41 +147,41 @@ const tenantValues = [
 
   <!-- Tenant values -->
   <section class="max-w-5xl mx-auto px-6 py-20">
-    <p class="text-xs uppercase tracking-widest text-stone-400 mb-3">Att bo hos oss</p>
-    <h2 class="text-2xl sm:text-3xl font-semibold text-stone-900 mb-12">
+    <p class="text-xs uppercase tracking-widest text-ink-muted mb-3">Att bo hos oss</p>
+    <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ink mb-12">
       Direkt kontakt.<br />Snabb hantering.<br />Inga mellanhänder.
     </h2>
     <div class="grid sm:grid-cols-2 gap-8">
       {tenantValues.map(v => (
         <div>
-          <p class="font-medium text-stone-900 mb-2">{v.title}</p>
-          <p class="text-stone-500 text-sm leading-relaxed">{v.text}</p>
+          <p class="font-medium text-ink mb-2">{v.title}</p>
+          <p class="text-ink-muted text-sm leading-relaxed">{v.text}</p>
         </div>
       ))}
     </div>
   </section>
 
   <!-- Quote -->
-  <section class="bg-stone-50 py-20">
+  <section class="bg-cream-dark py-20">
     <div class="max-w-5xl mx-auto px-6 text-center">
-      <p class="text-2xl sm:text-3xl font-light text-stone-700 italic max-w-xl mx-auto leading-snug">
-        "Det ska kännas tryggt att bo hos oss."
+      <p class="font-serif text-2xl sm:text-3xl font-light text-ink italic max-w-xl mx-auto leading-snug">
+        „Det ska kännas tryggt att bo hos oss.“
       </p>
-      <p class="mt-4 text-stone-400 text-sm">— Anders Sandhof</p>
+      <p class="mt-4 text-ink-muted text-sm">— Anders Sandhof</p>
     </div>
   </section>
 
   <!-- CTA -->
   <section class="max-w-5xl mx-auto px-6 py-20">
-    <h2 class="text-2xl sm:text-3xl font-semibold text-stone-900 mb-4">Intresserad av att bo hos oss?</h2>
-    <p class="text-stone-500 max-w-prose mb-8 leading-relaxed">
+    <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ink mb-4">Intresserad av att bo hos oss?</h2>
+    <p class="text-ink-muted max-w-prose mb-8 leading-relaxed">
       Lägenheter tillsätts snabbt och vi annonserar sällan. Skicka en intresseanmälan så hör vi av oss.
     </p>
     <div class="flex flex-wrap gap-4">
-      <a href="/kontakt" class="px-6 py-3 bg-stone-900 text-white text-sm font-medium rounded hover:bg-stone-700 transition-colors">
+      <a href="/kontakt" class="px-6 py-3 bg-forest text-white text-sm font-medium rounded hover:opacity-90 transition-opacity">
         Skicka intresseanmälan
       </a>
-      <a href="/fastigheter" class="px-6 py-3 border border-stone-300 text-stone-700 text-sm font-medium rounded hover:border-stone-500 transition-colors">
+      <a href="/fastigheter" class="px-6 py-3 border border-cream-border text-ink text-sm font-medium rounded hover:border-ink-muted transition-colors">
         Se våra fastigheter
       </a>
     </div>

@@ -7,9 +7,9 @@ const navLinks = [
 const currentPath = Astro.url.pathname
 ---
 
-<header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-stone-100">
+<header class="sticky top-0 z-50 bg-cream-dark/95 backdrop-blur border-b border-cream-border">
   <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-    <a href="/" class="font-semibold text-stone-900 tracking-tight">
+    <a href="/" class="font-serif font-semibold text-ink tracking-tight">
       Sandhof Fastigheter
     </a>
     <nav class="hidden sm:flex items-center gap-8">
@@ -18,8 +18,8 @@ const currentPath = Astro.url.pathname
           href={link.href}
           class={`text-sm transition-colors ${
             currentPath.startsWith(link.href)
-              ? 'text-stone-900 font-medium'
-              : 'text-stone-500 hover:text-stone-900'
+              ? 'text-ink font-medium'
+              : 'text-ink-muted hover:text-ink'
           }`}
         >
           {link.label}
@@ -29,7 +29,7 @@ const currentPath = Astro.url.pathname
     <!-- Mobile menu button -->
     <button
       id="mobile-menu-btn"
-      class="sm:hidden p-2 text-stone-600"
+      class="sm:hidden p-2 text-ink-muted"
       aria-label="Öppna meny"
     >
       <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -40,9 +40,9 @@ const currentPath = Astro.url.pathname
     </button>
   </div>
   <!-- Mobile menu -->
-  <div id="mobile-menu" class="hidden sm:hidden border-t border-stone-100 bg-white">
+  <div id="mobile-menu" class="hidden sm:hidden border-t border-cream-border bg-cream-dark">
     {navLinks.map(link => (
-      <a href={link.href} class="block px-6 py-3 text-stone-700 hover:bg-stone-50">
+      <a href={link.href} class="block px-6 py-3 text-ink hover:bg-cream">
         {link.label}
       </a>
     ))}
