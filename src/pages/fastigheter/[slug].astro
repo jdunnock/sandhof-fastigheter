@@ -19,7 +19,7 @@ const heroSrc = property.gallery[0] ? resolveImageUrl(property.gallery[0].url) :
   <!-- Hero image -->
   <div class="w-full h-64 sm:h-96 lg:h-[32rem] bg-cream-border overflow-hidden flex items-center justify-center">
     {heroSrc !== '/images/placeholder-property.jpg' ? (
-      <img src={heroSrc} alt={property.name} class="w-full h-full object-cover object-top" />
+      <img src={heroSrc} alt={property.name} class="w-full h-full object-cover" />
     ) : (
       <p class="text-ink-muted text-sm">Bilder på väg</p>
     )}
@@ -58,7 +58,7 @@ const heroSrc = property.gallery[0] ? resolveImageUrl(property.gallery[0].url) :
           <img
             src={resolveImageUrl(img.url)}
             alt={img.caption || `${property.name} — bild`}
-            class="rounded aspect-[4/3] object-cover object-top w-full bg-cream-border"
+            class="rounded aspect-[4/3] object-cover w-full bg-cream-border"
             loading="lazy"
           />
         ))}
