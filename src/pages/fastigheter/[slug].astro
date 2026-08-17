@@ -1,6 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro'
-import { fetchPublicProperties, resolveImageUrl } from '../../lib/images'
+import { fetchPublicProperties, resolveImageUrl, focalPosition } from '../../lib/images'
 import type { RemoteProperty } from '../../lib/images'
 // Static per-property extras (features etc.) keyed by public_slug
 import { propertyExtras } from '../../content/propertyExtras'
@@ -19,7 +19,7 @@ const heroSrc = property.gallery[0] ? resolveImageUrl(property.gallery[0].url) :
   <!-- Hero image -->
   <div class="w-full h-64 sm:h-96 lg:h-[32rem] bg-cream-border overflow-hidden flex items-center justify-center">
     {heroSrc !== '/images/placeholder-property.jpg' ? (
-      <img src={heroSrc} alt={property.name} class="w-full h-full object-cover" />
+      <img src={heroSrc} alt={property.name} class="w-full h-full object-cover" style={`object-position:${focalPosition(property.gallery[0])}`} />
     ) : (
       <p class="text-ink-muted text-sm">Bilder på väg</p>
     )}
@@ -59,6 +59,7 @@ const heroSrc = property.gallery[0] ? resolveImageUrl(property.gallery[0].url) :
             src={resolveImageUrl(img.url)}
             alt={img.caption || `${property.name} — bild`}
             class="rounded aspect-[4/3] object-cover w-full bg-cream-border"
+            style={`object-position:${focalPosition(img)}`}
             loading="lazy"
           />
         ))}

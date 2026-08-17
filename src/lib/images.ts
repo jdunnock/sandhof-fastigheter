@@ -7,6 +7,13 @@ export interface RemoteImage {
   category: string
   caption: string
   sort_order: number
+  focal_x?: number
+  focal_y?: number
+}
+
+/** Returns a CSS object-position value from a focal point, defaulting to center. */
+export function focalPosition(img: RemoteImage): string {
+  return `${img.focal_x ?? 50}% ${img.focal_y ?? 50}%`
 }
 
 export interface RemoteProperty {
