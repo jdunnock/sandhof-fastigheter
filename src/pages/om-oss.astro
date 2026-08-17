@@ -2,45 +2,29 @@
 import Layout from '../layouts/Layout.astro'
 ---
 
-<Layout title="Om oss" description="Familjeföretaget Sandhof Fastigheter i Skövde — Anders och Maria Sandhof.">
+<Layout title="Om oss" description="Sandhof Fastigheter — ett litet fastighetsbolag med mer än 20 års erfarenhet i Skövde.">
   <section class="max-w-3xl mx-auto px-6 pt-16 pb-20">
-    <p class="text-xs uppercase tracking-widest text-stone-400 mb-3">Personerna bakom Sandhof</p>
+    <p class="text-xs uppercase tracking-widest text-stone-400 mb-3">Om oss</p>
     <h1 class="text-3xl sm:text-4xl font-semibold text-stone-900 mb-6 max-w-xl leading-tight">
-      Vi är inte ett anonymt bolag — vi är ägarna, och vi är med i det dagliga arbetet.
+      Ett litet fastighetsbolag med lång erfarenhet.
     </h1>
+    <p class="text-stone-600 leading-relaxed mb-6">
+      Sandhof Fastigheter är ett privatägt fastighetsbolag baserat i Skövde. Vi har arbetat med fastigheter i mer än 20 år och äger idag sex fastigheter — alla centralt belägna i Skövde.
+    </p>
+    <p class="text-stone-600 leading-relaxed mb-6">
+      Vi sköter förvaltningen själva, utan mellanhänder. Det innebär att du som hyresgäst alltid når den som faktiskt fattar besluten — inte ett callcenter eller ett ärendesystem.
+    </p>
+    <p class="text-stone-600 leading-relaxed mb-12">
+      Vår ambition är enkel: välskötta fastigheter där folk trivs och vill bo kvar. Det kräver löpande underhåll, snabb hantering av fel och en vilja att ta ansvar för helheten.
+    </p>
 
-    <div class="grid sm:grid-cols-2 gap-12 mt-12">
-      <div>
-        <div class="w-14 h-14 rounded-full bg-stone-100 flex items-center justify-center text-sm font-semibold text-stone-500 mb-5">AS</div>
-        <p class="font-semibold text-stone-900 text-lg">Anders Sandhof</p>
-        <p class="text-xs uppercase tracking-widest text-stone-400 mt-1 mb-5">Grundare &amp; ägare</p>
-        <blockquote class="text-stone-600 italic leading-relaxed mb-4 border-l-2 border-stone-200 pl-4">
-          "Jag har alltid trott att en fastighet som sköts ordentligt är en fastighet folk vill bo kvar i. Det är lika mycket en fråga om respekt som om ekonomi."
-        </blockquote>
-        <p class="text-stone-500 text-sm leading-relaxed">
-          Anders grundade Sandhof 2010 och är involverad i den dagliga förvaltningen. Han känner varje fastighet inifrån och ut — bokstavligen.
-        </p>
-      </div>
-      <div>
-        <div class="w-14 h-14 rounded-full bg-stone-100 flex items-center justify-center text-sm font-semibold text-stone-500 mb-5">MS</div>
-        <p class="font-semibold text-stone-900 text-lg">Maria Sandhof</p>
-        <p class="text-xs uppercase tracking-widest text-stone-400 mt-1 mb-5">Ägare, ekonomi &amp; uthyrning</p>
-        <blockquote class="text-stone-600 italic leading-relaxed mb-4 border-l-2 border-stone-200 pl-4">
-          "Jag vill att de som bor hos oss ska känna att deras hem tas om hand. Det är det enklaste sättet att förklara vad vi gör."
-        </blockquote>
-        <p class="text-stone-500 text-sm leading-relaxed">
-          Maria ansvarar för ekonomi, hyresavtal och kontakten med hyresgäster. Tydlighet och tillgänglighet är hennes ledord.
-        </p>
-      </div>
-    </div>
-
-    <div class="mt-16 pt-12 border-t border-stone-100">
-      <h2 class="font-semibold text-stone-900 text-xl mb-6">Tre saker vi tror på som fastighetsägare</h2>
+    <div class="mt-4 pt-12 border-t border-stone-100">
+      <h2 class="font-semibold text-stone-900 text-xl mb-6">Hur vi arbetar</h2>
       <div class="space-y-8">
         {[
-          { num: '01', title: 'Bra hem', text: 'Vi vill att fastigheterna vi äger är platser där folk trivs och vill bo länge. Det innebär att vi tar hand om detaljerna — inte bara det som syns.' },
-          { num: '02', title: 'Ta hand om det vi äger', text: 'Vi underhåller och förbättrar löpande, inte bara när något redan gått sönder. Det sparar resurser och gör att fastigheterna håller längre.' },
-          { num: '03', title: 'Långsiktighet', text: 'Vi tänker i decennier, inte kvartal. Det påverkar hur vi investerar, vilka hantverkare vi väljer och hur vi behandlar de som bor hos oss.' },
+          { num: '01', title: 'Trivsamma hem', text: 'Vi vill att fastigheterna vi äger är platser där folk trivs och vill bo länge. Detaljer spelar roll — inte bara det som syns.' },
+          { num: '02', title: 'Löpande underhåll', text: 'Vi tar hand om fastigheterna löpande, inte bara när något gått sönder. Det gör att de håller längre och hyresgästerna mår bättre.' },
+          { num: '03', title: 'Lång sikt', text: 'Med mer än 20 års erfarenhet i branschen tänker vi i decennier. Det påverkar hur vi underhåller, vilka hantverkare vi väljer och hur vi behandlar de som bor hos oss.' },
         ].map(p => (
           <div class="flex gap-6">
             <span class="text-2xl font-light text-stone-200 flex-shrink-0 w-8">{p.num}</span>

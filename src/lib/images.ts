@@ -20,6 +20,25 @@ export interface RemoteProperty {
   gallery: RemoteImage[]
 }
 
+const PROPERTY_ORDER = [
+  'Sveagatan 7',
+  'Tallbacken 7',
+  'Carlsro',
+  'Sveagatan 30',
+  'Ännagatan 7',
+  'Rådmansgatan 20',
+]
+
+function sortProperties(properties: RemoteProperty[]): RemoteProperty[] {
+  return [...properties].sort((a, b) => {
+    const ai = PROPERTY_ORDER.findIndex(key => a.name.includes(key))
+    const bi = PROPERTY_ORDER.findIndex(key => b.name.includes(key))
+    const an = ai === -1 ? PROPERTY_ORDER.length : ai
+    const bn = bi === -1 ? PROPERTY_ORDER.length : bi
+    return an - bn
+  })
+}
+
 /** Fetches all public properties from dellmander-inside. Returns [] on failure. */
 export async function fetchPublicProperties(): Promise<RemoteProperty[]> {
   if (!API_BASE) return []
@@ -27,7 +46,7 @@ export async function fetchPublicProperties(): Promise<RemoteProperty[]> {
     const res = await fetch(`${API_BASE}/api/public/properties`)
     if (!res.ok) return []
     const { properties } = await res.json() as { properties: RemoteProperty[] }
-    return properties ?? []
+    return sortProperties(properties ?? [])
   } catch {
     return []
   }
