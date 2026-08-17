@@ -5,22 +5,33 @@ const navLinks = [
   { href: '/kontakt', label: 'Kontakt' },
 ]
 const currentPath = Astro.url.pathname
+const isHome = currentPath === '/'
 ---
 
-<header class="sticky top-0 z-50 bg-cream-dark/95 backdrop-blur border-b border-cream-border">
+<header
+  id="main-nav"
+  class={isHome
+    ? 'fixed top-0 left-0 right-0 z-50 transition-all duration-300'
+    : 'sticky top-0 z-50 bg-cream-dark/95 backdrop-blur border-b border-cream-border'}
+>
   <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-    <a href="/" class="font-serif font-semibold text-ink tracking-tight">
+    <a
+      href="/"
+      class={isHome ? 'font-serif font-semibold text-white tracking-tight' : 'font-serif font-semibold text-ink tracking-tight'}
+    >
       Sandhof Fastigheter
     </a>
     <nav class="hidden sm:flex items-center gap-8">
       {navLinks.map(link => (
         <a
           href={link.href}
-          class={`text-sm transition-colors ${
-            currentPath.startsWith(link.href)
-              ? 'text-ink font-medium'
-              : 'text-ink-muted hover:text-ink'
-          }`}
+          class={isHome
+            ? 'text-sm text-white/80 hover:text-white transition-colors'
+            : `text-sm transition-colors ${
+                currentPath.startsWith(link.href)
+                  ? 'text-ink font-medium'
+                  : 'text-ink-muted hover:text-ink'
+              }`}
         >
           {link.label}
         </a>
@@ -29,7 +40,7 @@ const currentPath = Astro.url.pathname
     <!-- Mobile menu button -->
     <button
       id="mobile-menu-btn"
-      class="sm:hidden p-2 text-ink-muted"
+      class={isHome ? 'sm:hidden p-2 text-white' : 'sm:hidden p-2 text-ink-muted'}
       aria-label="Öppna meny"
     >
       <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -40,9 +51,17 @@ const currentPath = Astro.url.pathname
     </button>
   </div>
   <!-- Mobile menu -->
-  <div id="mobile-menu" class="hidden sm:hidden border-t border-cream-border bg-cream-dark">
+  <div
+    id="mobile-menu"
+    class={isHome
+      ? 'hidden sm:hidden border-t border-white/10 bg-black/80 backdrop-blur'
+      : 'hidden sm:hidden border-t border-cream-border bg-cream-dark'}
+  >
     {navLinks.map(link => (
-      <a href={link.href} class="block px-6 py-3 text-ink hover:bg-cream">
+      <a
+        href={link.href}
+        class={isHome ? 'block px-6 py-3 text-white hover:bg-white/10' : 'block px-6 py-3 text-ink hover:bg-cream'}
+      >
         {link.label}
       </a>
     ))}
@@ -53,4 +72,26 @@ const currentPath = Astro.url.pathname
   const btn = document.getElementById('mobile-menu-btn')
   const menu = document.getElementById('mobile-menu')
   btn?.addEventListener('click', () => menu?.classList.toggle('hidden'))
+
+  // On homepage: turn nav opaque when scrolled past the hero
+  const nav = document.getElementById('main-nav')
+  if (nav && nav.classList.contains('fixed')) {
+    const makeOpaque = () => {
+      const scrolled = window.scrollY > window.innerHeight * 0.6
+      nav.style.background = scrolled ? 'rgba(245,241,232,0.97)' : ''
+      nav.style.backdropFilter = scrolled ? 'blur(8px)' : ''
+      nav.style.borderBottom = scrolled ? '1px solid rgba(0,0,0,0.08)' : ''
+      // Switch text colors
+      nav.querySelectorAll('a, button').forEach(el => {
+        if (scrolled) {
+          el.classList.remove('text-white', 'text-white/80')
+          el.classList.add('text-ink')
+        } else {
+          el.classList.remove('text-ink')
+          el.classList.add(el.tagName === 'A' ? 'text-white/80' : 'text-white')
+        }
+      })
+    }
+    window.addEventListener('scroll', makeOpaque, { passive: true })
+  }
 </script>

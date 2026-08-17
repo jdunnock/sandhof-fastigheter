@@ -9,6 +9,10 @@ const featuredWithImages = allProperties.slice(0, 3).map(p => ({
   heroImageUrl: p.gallery[0] ? resolveImageUrl(p.gallery[0].url) : '',
 }))
 
+const carouselImages = allProperties
+  .map(p => ({ name: p.name, url: p.gallery[0] ? resolveImageUrl(p.gallery[0].url) : '' }))
+  .filter(img => img.url)
+
 const principles = [
   {
     num: '01',
@@ -43,24 +47,97 @@ const tenantValues = [
 ---
 
 <Layout title="Välkommen">
-  <!-- Hero -->
-  <section class="max-w-5xl mx-auto px-6 pt-20 pb-16 sm:pt-28 sm:pb-24">
-    <p class="text-xs uppercase tracking-widest text-ink-muted mb-6">Skövde · Sedan 2010</p>
-    <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-semibold text-ink leading-tight max-w-2xl mb-8">
-      Fastigheter vi själva vill vara stolta över.
-    </h1>
-    <p class="text-ink-muted text-lg max-w-xl mb-10 leading-relaxed">
-      Vi äger och sköter sju fastigheter i Skövde. Personligt engagerade i varje byggnad, med blicken på lång sikt.
-    </p>
-    <div class="flex flex-wrap gap-4">
-      <a href="/fastigheter" class="px-6 py-3 bg-forest text-white text-sm font-medium rounded hover:opacity-90 transition-opacity">
-        Våra fastigheter
-      </a>
-      <a href="/om-oss" class="px-6 py-3 border border-cream-border text-ink text-sm font-medium rounded hover:border-ink-muted transition-colors">
-        Om oss
-      </a>
+  <!-- Hero Carousel -->
+  <div class="relative h-screen overflow-hidden bg-ink" id="hero-carousel">
+    {carouselImages.length > 0 ? (
+      carouselImages.map((img, i) => (
+        <div
+          class="carousel-slide absolute inset-0 transition-opacity duration-[1200ms]"
+          data-index={String(i)}
+          style={i === 0 ? 'opacity:1' : 'opacity:0'}
+        >
+          <img
+            src={img.url}
+            alt={img.name}
+            class="w-full h-full object-cover"
+            loading={i === 0 ? 'eager' : 'lazy'}
+          />
+        </div>
+      ))
+    ) : (
+      <div class="absolute inset-0 bg-stone-700"></div>
+    )}
+
+    <!-- Gradient overlay -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/75 z-10 pointer-events-none"></div>
+
+    <!-- Text & CTA -->
+    <div class="absolute inset-0 z-20 flex flex-col justify-end px-8 pb-16 sm:px-16 sm:pb-20">
+      <p class="text-xs uppercase tracking-widest text-white/70 mb-5">Skövde · Sedan 2010</p>
+      <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-tight max-w-2xl mb-8">
+        Fastigheter vi själva<br />vill vara stolta över.
+      </h1>
+      <p class="text-white/80 text-lg max-w-xl mb-10 leading-relaxed hidden sm:block">
+        Vi äger och sköter sju fastigheter i Skövde. Personligt engagerade i varje byggnad, med blicken på lång sikt.
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <a href="/fastigheter" class="px-6 py-3 bg-white text-ink text-sm font-medium rounded hover:bg-cream transition-colors">
+          Våra fastigheter
+        </a>
+        <a href="/om-oss" class="px-6 py-3 border border-white/50 text-white text-sm font-medium rounded hover:border-white transition-colors">
+          Om oss
+        </a>
+      </div>
     </div>
-  </section>
+
+    <!-- Dot indicators -->
+    {carouselImages.length > 1 && (
+      <div class="absolute bottom-8 right-8 z-20 flex gap-2 items-center">
+        {carouselImages.map((_, i) => (
+          <button
+            class="carousel-dot h-2 rounded-full transition-all duration-300"
+            data-index={String(i)}
+            style={i === 0 ? 'width:1.5rem;background:rgba(255,255,255,0.9)' : 'width:0.5rem;background:rgba(255,255,255,0.4)'}
+            aria-label={`Bild ${i + 1}`}
+          ></button>
+        ))}
+      </div>
+    )}
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll<HTMLElement>('.carousel-slide')
+    const dots = document.querySelectorAll<HTMLButtonElement>('.carousel-dot')
+    if (slides.length > 1) {
+      let current = 0
+      let timer: ReturnType<typeof setInterval>
+
+      function goTo(next: number) {
+        slides[current].style.opacity = '0'
+        if (dots[current]) {
+          dots[current].style.width = '0.5rem'
+          dots[current].style.background = 'rgba(255,255,255,0.4)'
+        }
+        current = next
+        slides[current].style.opacity = '1'
+        if (dots[current]) {
+          dots[current].style.width = '1.5rem'
+          dots[current].style.background = 'rgba(255,255,255,0.9)'
+        }
+      }
+
+      function resetTimer() {
+        clearInterval(timer)
+        timer = setInterval(() => goTo((current + 1) % slides.length), 5000)
+      }
+
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => { goTo(i); resetTimer() })
+      })
+
+      timer = setInterval(() => goTo((current + 1) % slides.length), 5000)
+    }
+  </script>
 
   <!-- Properties -->
   <section class="max-w-5xl mx-auto px-6 py-16 border-t border-cream-border">
