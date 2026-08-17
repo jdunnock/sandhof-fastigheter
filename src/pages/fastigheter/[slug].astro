@@ -1,16 +1,13 @@
 ---
 import Layout from '../../layouts/Layout.astro'
 import { fetchPublicProperties, resolveImageUrl, focalPosition } from '../../lib/images'
-import type { RemoteProperty } from '../../lib/images'
-// Static per-property extras (features etc.) keyed by public_slug
 import { propertyExtras } from '../../content/propertyExtras'
 
-export async function getStaticPaths() {
-  const properties = await fetchPublicProperties()
-  return properties.map(p => ({ params: { slug: p.public_slug }, props: { property: p } }))
-}
+const { slug } = Astro.params
+const properties = await fetchPublicProperties()
+const property = properties.find(p => p.public_slug === slug)
+if (!property) return Astro.redirect('/fastigheter', 302)
 
-const property = Astro.props.property as RemoteProperty
 const extras = propertyExtras[property.public_slug] ?? {}
 const heroSrc = property.gallery[0] ? resolveImageUrl(property.gallery[0].url) : '/images/placeholder-property.jpg'
 ---
