@@ -38,6 +38,13 @@ function checkAuth(req, res) {
 }
 
 http.createServer((req, res) => {
+  // Railway healthcheck — bypass auth
+  if (req.url === '/health') {
+    res.writeHead(200)
+    res.end('ok')
+    return
+  }
+
   if (!checkAuth(req, res)) return
 
   let urlPath = decodeURIComponent(req.url.split('?')[0])
