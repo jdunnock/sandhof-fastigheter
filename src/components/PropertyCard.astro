@@ -3,14 +3,11 @@ import type { Property } from '../content/properties'
 
 interface Props {
   property: Property
-  /** Base URL for dellmander-inside image API */
-  apiBase?: string
+  heroImageUrl?: string
 }
 
-const { property, apiBase = import.meta.env.PUBLIC_DELLMANDER_API_URL ?? '' } = Astro.props
-const imgSrc = property.heroImage
-  ? `${apiBase}/api/gallery-images/${property.heroImage}`
-  : '/images/placeholder-property.jpg'
+const { property, heroImageUrl } = Astro.props
+const imgSrc = heroImageUrl || '/images/placeholder-property.jpg'
 ---
 
 <article class="group bg-cream-dark border border-cream-border rounded-lg overflow-hidden hover:shadow-md transition-shadow">

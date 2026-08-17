@@ -2,8 +2,18 @@
 import Layout from '../layouts/Layout.astro'
 import PropertyCard from '../components/PropertyCard.astro'
 import { properties } from '../content/properties'
+import { fetchPropertyImages, resolveImageUrl } from '../lib/images'
 
 const featured = properties.slice(0, 3)
+
+// Fetch hero image for each featured property at build time
+const featuredWithImages = await Promise.all(
+  featured.map(async p => {
+    const images = await fetchPropertyImages(p.apiId)
+    const hero = images[0] ? resolveImageUrl(images[0].url) : ''
+    return { property: p, heroImageUrl: hero }
+  })
+)
 
 const principles = [
   {
@@ -63,7 +73,7 @@ const tenantValues = [
     <p class="text-xs uppercase tracking-widest text-ink-muted mb-3">Sju fastigheter i Skövde</p>
     <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ink mb-10">Välskötta byggnader med karaktär</h2>
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {featured.map(p => <PropertyCard property={p} />)}
+      {featuredWithImages.map(({ property, heroImageUrl }) => <PropertyCard property={property} heroImageUrl={heroImageUrl} />)}
     </div>
     <div class="mt-10">
       <a href="/fastigheter" class="text-sm font-medium text-forest underline underline-offset-2 hover:opacity-70">

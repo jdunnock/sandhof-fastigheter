@@ -2,6 +2,15 @@
 import Layout from '../../layouts/Layout.astro'
 import PropertyCard from '../../components/PropertyCard.astro'
 import { properties } from '../../content/properties'
+import { fetchPropertyImages, resolveImageUrl } from '../../lib/images'
+
+const propertiesWithImages = await Promise.all(
+  properties.map(async p => {
+    const images = await fetchPropertyImages(p.apiId)
+    const hero = images[0] ? resolveImageUrl(images[0].url) : ''
+    return { property: p, heroImageUrl: hero }
+  })
+)
 ---
 
 <Layout title="Fastigheter" description="Sandhof Fastigheter äger och sköter sju fastigheter i Skövde.">
@@ -14,7 +23,7 @@ import { properties } from '../../content/properties'
   </section>
   <section class="max-w-5xl mx-auto px-6 pb-20">
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {properties.map(p => <PropertyCard property={p} />)}
+      {propertiesWithImages.map(({ property, heroImageUrl }) => <PropertyCard property={property} heroImageUrl={heroImageUrl} />)}
     </div>
   </section>
 </Layout>
