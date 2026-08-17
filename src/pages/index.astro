@@ -1,19 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import PropertyCard from '../components/PropertyCard.astro'
-import { properties } from '../content/properties'
-import { fetchPropertyImages, resolveImageUrl } from '../lib/images'
+import { fetchPublicProperties, resolveImageUrl } from '../lib/images'
 
-const featured = properties.slice(0, 3)
-
-// Fetch hero image for each featured property at build time
-const featuredWithImages = await Promise.all(
-  featured.map(async p => {
-    const images = await fetchPropertyImages(p.apiId)
-    const hero = images[0] ? resolveImageUrl(images[0].url) : ''
-    return { property: p, heroImageUrl: hero }
-  })
-)
+const allProperties = await fetchPublicProperties()
+const featuredWithImages = allProperties.slice(0, 3).map(p => ({
+  property: p,
+  heroImageUrl: p.gallery[0] ? resolveImageUrl(p.gallery[0].url) : '',
+}))
 
 const principles = [
   {

@@ -1,24 +1,76 @@
 ---
 import Layout from '../../layouts/Layout.astro'
-import { properties, getProperty } from '../../content/properties'
-import { fetchPropertyImages, resolveImageUrl } from '../../lib/images'
+import { fetchPublicProperties, resolveImageUrl } from '../../lib/images'
+import type { RemoteProperty } from '../../lib/images'
+// Static per-property extras (features etc.) keyed by public_slug
+import { propertyExtras } from '../../content/propertyExtras'
 
 export async function getStaticPaths() {
-  return await Promise.all(
-    properties.map(async p => {
-      const images = await fetchPropertyImages(p.apiId)
-      return { params: { slug: p.slug }, props: { images } }
-    })
-  )
+  const properties = await fetchPublicProperties()
+  return properties.map(p => ({ params: { slug: p.public_slug }, props: { property: p } }))
 }
 
-const { slug } = Astro.params
-const { images } = Astro.props
-const property = getProperty(slug)
-if (!property) return Astro.redirect('/fastigheter')
-
-const heroSrc = images[0] ? resolveImageUrl(images[0].url) : '/images/placeholder-property.jpg'
+const property = Astro.props.property as RemoteProperty
+const extras = propertyExtras[property.public_slug] ?? {}
+const heroSrc = property.gallery[0] ? resolveImageUrl(property.gallery[0].url) : '/images/placeholder-property.jpg'
 ---
+
+<Layout title={property.name} description={property.public_description}>
+  <!-- Hero image -->
+  <div class="w-full h-64 sm:h-96 bg-cream-border overflow-hidden">
+    <img src={heroSrc} alt={property.name} class="w-full h-full object-cover" />
+  </div>
+
+  <article class="max-w-3xl mx-auto px-6 py-12">
+    <a href="/fastigheter" class="text-sm text-ink-muted hover:text-ink mb-6 inline-block">
+      ← Alla fastigheter
+    </a>
+    <p class="text-xs uppercase tracking-widest text-ink-muted mb-2">
+      {property.address}{extras.apartments ? ` · ${extras.apartments} lgh` : ''}
+    </p>
+    <h1 class="font-serif text-3xl sm:text-4xl font-semibold text-ink mb-6">{property.name}</h1>
+    <p class="text-ink-muted text-lg leading-relaxed mb-8">
+      {property.public_long_description || property.public_description}
+    </p>
+
+    {extras.features && extras.features.length > 0 && (
+      <div class="mb-10">
+        <h2 class="font-serif font-semibold text-ink mb-4">Fastighetens egenskaper</h2>
+        <ul class="space-y-2">
+          {extras.features.map((f: string) => (
+            <li class="flex items-center gap-2 text-ink-muted text-sm">
+              <span class="w-1.5 h-1.5 rounded-full bg-ink-muted flex-shrink-0"></span>
+              {f}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    <!-- Gallery -->
+    {property.gallery.length > 1 && (
+      <div class="grid grid-cols-2 gap-3 mb-12">
+        {property.gallery.slice(1).map(img => (
+          <img
+            src={resolveImageUrl(img.url)}
+            alt={img.caption || `${property.name} — bild`}
+            class="rounded aspect-[4/3] object-cover w-full bg-cream-border"
+            loading="lazy"
+          />
+        ))}
+      </div>
+    )}
+
+    <!-- CTA -->
+    <div class="border-t border-cream-border pt-10">
+      <h2 class="font-serif font-semibold text-ink mb-2">Intresserad av att bo här?</h2>
+      <p class="text-ink-muted text-sm mb-4">Kontakta oss så berättar vi om lediga lägenheter.</p>
+      <a href="/kontakt" class="inline-block px-5 py-2.5 bg-forest text-white text-sm font-medium rounded hover:opacity-90 transition-opacity">
+        Skicka intresseanmälan
+      </a>
+    </div>
+  </article>
+</Layout>
 
 <Layout title={property.name} description={property.description}>
   <!-- Hero image -->

@@ -1,16 +1,12 @@
 ---
 import Layout from '../../layouts/Layout.astro'
 import PropertyCard from '../../components/PropertyCard.astro'
-import { properties } from '../../content/properties'
-import { fetchPropertyImages, resolveImageUrl } from '../../lib/images'
+import { fetchPublicProperties, resolveImageUrl } from '../../lib/images'
 
-const propertiesWithImages = await Promise.all(
-  properties.map(async p => {
-    const images = await fetchPropertyImages(p.apiId)
-    const hero = images[0] ? resolveImageUrl(images[0].url) : ''
-    return { property: p, heroImageUrl: hero }
-  })
-)
+const propertiesWithImages = (await fetchPublicProperties()).map(p => ({
+  property: p,
+  heroImageUrl: p.gallery[0] ? resolveImageUrl(p.gallery[0].url) : '',
+}))
 ---
 
 <Layout title="Fastigheter" description="Sandhof Fastigheter äger och sköter sju fastigheter i Skövde.">

@@ -1,8 +1,8 @@
 ---
-import type { Property } from '../content/properties'
+import type { RemoteProperty } from '../lib/images'
 
 interface Props {
-  property: Property
+  property: RemoteProperty
   heroImageUrl?: string
 }
 
@@ -11,7 +11,7 @@ const imgSrc = heroImageUrl || '/images/placeholder-property.jpg'
 ---
 
 <article class="group bg-cream-dark border border-cream-border rounded-lg overflow-hidden hover:shadow-md transition-shadow">
-  <a href={`/fastigheter/${property.slug}`}>
+  <a href={`/fastigheter/${property.public_slug}`}>
     <div class="aspect-[4/3] bg-cream-border overflow-hidden">
       <img
         src={imgSrc}
@@ -22,10 +22,10 @@ const imgSrc = heroImageUrl || '/images/placeholder-property.jpg'
     </div>
     <div class="p-5">
       <p class="text-xs uppercase tracking-widest text-ink-muted mb-1">
-        {property.address}{property.apartments > 0 ? ` · ${property.apartments} lgh` : ''}
+        {property.address}
       </p>
       <h3 class="font-serif font-semibold text-ink text-lg mb-2">{property.name}</h3>
-      <p class="text-ink-muted text-sm leading-relaxed line-clamp-3">{property.description}</p>
+      <p class="text-ink-muted text-sm leading-relaxed line-clamp-3">{property.public_description}</p>
       <span class="inline-block mt-4 text-sm font-medium text-forest underline underline-offset-2">
         Visa fastigheten →
       </span>
