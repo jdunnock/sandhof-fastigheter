@@ -13,12 +13,18 @@ const imgSrc = heroImageUrl || '/images/placeholder-property.jpg'
 <article class="group bg-cream-dark border border-cream-border rounded-lg overflow-hidden hover:shadow-md transition-shadow">
   <a href={`/fastigheter/${property.public_slug}`}>
     <div class="aspect-[4/3] bg-cream-border overflow-hidden">
-      <img
-        src={imgSrc}
-        alt={property.name}
-        class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
-        loading="lazy"
-      />
+      {imgSrc !== '/images/placeholder-property.jpg' ? (
+        <img
+          src={imgSrc}
+          alt={property.name}
+          class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+          loading="lazy"
+        />
+      ) : (
+        <div class="w-full h-full flex items-center justify-center">
+          <p class="text-ink-muted text-sm">Bilder på väg</p>
+        </div>
+      )}
     </div>
     <div class="p-5">
       <p class="text-xs uppercase tracking-widest text-ink-muted mb-1">
