@@ -36,7 +36,17 @@ Inga headless CMS eller databaser används — ändringar görs direkt i TypeScr
 3. **Ingen auth-logik** i detta projekt — det är en publik sajt
 4. **Inga breaking changes** på befintliga URL-slug:ar utan redirect
 
-## Agents & Skills
+## Agents
+
+- **@ux-designer** — design och layout, mobil responsivitet, visuell hierarki, färgkontrast, typografi
+- **@swedish-copywriter** — skriva och redigera svensk text: fastighetsbeskrivningar, Om oss, hero, meta-descriptions
+- **@content-manager** — lägga till/uppdatera fastigheter i `properties.ts`, koppla bilder från dellmander-inside
+- **@deployment-engineer** — Railway-deploys, env-variabler, healthcheck, Basic Auth-lösenord
+- **@reviewer** — läser och granskar kod pre-deploy: säkerhet, slug-säkerhet, tillgänglighet, SEO (ändrar aldrig filer)
+
+## Skills
+
 - `content-workflow` — lägga till/ändra fastighetsinnehåll, bilder, texter
 - `image-handling` — koppla bildnamn från dellmander-inside till properties.ts
-- `deploy-workflow` — deploya till Vercel/Netlify/Railway
+- `deploy-workflow` — deploya till Railway (Astro SSR, node adapter)
+- `swedish-copywriter` — tonalitet, riktlinjer och begränsningar för all text på sajten
