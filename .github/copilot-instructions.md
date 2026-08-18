@@ -10,8 +10,11 @@ Syftet är att presentera Sandhof Fastigheters fastigheter och bolagets profil f
 - **TypeScript** — strict mode, inga `any`
 - **Inga backend-routes** i detta projekt — kontaktformuläret kan använda Astro endpoints (`src/pages/api/`) eller en extern tjänst
 
-## Delade resurser — dellmander-inside
-Fastighetsbilder serveras från dellmander-inside:
+## Delade resurser — sandhof-inside
+Sandhof-fastigheter är beroende av **sandhof-inside** (repo: `dellmander-inside`) för bilder och potentiellt fler datakällor framöver.
+Se `.github/skills/system-overview/SKILL.md` för fullständig ekosystemöversikt och lista över aktiva beroenden.
+
+Fastighetsbilder serveras från sandhof-inside:
 - Galleri: `PUBLIC_DELLMANDER_API_URL/api/gallery-images/:filename`
 - Fastighetsbild: `PUBLIC_DELLMANDER_API_URL/api/property-images/:filename`
 - Ingen auth krävs — routerna är publika
@@ -46,7 +49,8 @@ Inga headless CMS eller databaser används — ändringar görs direkt i TypeScr
 
 ## Skills
 
+- `system-overview` — ekosystemöversikt: sandhof-fastigheter + sandhof-inside, aktiva beroenden, lokal dev-setup
 - `content-workflow` — lägga till/ändra fastighetsinnehåll, bilder, texter
-- `image-handling` — koppla bildnamn från dellmander-inside till properties.ts
+- `image-handling` — koppla bildnamn från sandhof-inside till properties.ts
 - `deploy-workflow` — deploya till Railway (Astro SSR, node adapter)
 - `swedish-copywriter` — tonalitet, riktlinjer och begränsningar för all text på sajten

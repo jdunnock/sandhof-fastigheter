@@ -1,15 +1,16 @@
 # Skill: image-handling
 
-Hur bilder fungerar och hur man kopplar dem från dellmander-inside till den publika sajten.
+Hur bilder fungerar och hur man kopplar dem från sandhof-inside till den publika sajten.
+Se `system-overview`-skillet för fullständig ekosystemöversikt.
 
 ## Arkitektur
 
 ```
-dellmander-inside (Railway)
+sandhof-inside / dellmander-inside (Railway)
   └── data/gallery-images/:filename    → /api/gallery-images/:filename (publik, ingen auth)
   └── data/property-images/:filename   → /api/property-images/:filename (publik, ingen auth)
 
-sandhof-fastigheter (Vercel/Netlify)
+sandhof-fastigheter (Railway)
   └── src/content/properties.ts
         heroImage: "filename.jpg"      → används för att bygga URL i runtime
         galleryImages: ["a.jpg", ...]
@@ -22,7 +23,7 @@ PUBLIC_DELLMANDER_API_URL=https://din-app.railway.app
 ```
 
 - I dev: `http://localhost:3001` (i `.env.local`)
-- I produktion: Railway-appens publika URL (som env-var i Vercel/Netlify/Railway)
+- I produktion: sandhof-insides Railway-URL (env-var i Railway)
 
 ## Bildkomponent-mönster
 
