@@ -6,7 +6,7 @@ import { propertyExtras } from '../../content/propertyExtras'
 const { slug } = Astro.params
 const properties = await fetchPublicProperties()
 const property = properties.find(p => p.public_slug === slug)
-if (!property) return Astro.redirect('/fastigheter', 302)
+if (!property) return Astro.redirect('/#fastigheter', 302)
 
 const extras = propertyExtras[property.public_slug] ?? {}
 const heroSrc = property.gallery[0] ? resolveImageUrl(property.gallery[0].url) : '/images/placeholder-property.jpg'
@@ -23,7 +23,7 @@ const heroSrc = property.gallery[0] ? resolveImageUrl(property.gallery[0].url) :
   </div>
 
   <article class="max-w-3xl mx-auto px-6 py-12">
-    <a href="/fastigheter" class="text-sm text-ink-muted hover:text-ink mb-6 inline-block">
+    <a href="/#fastigheter" class="text-sm text-ink-muted hover:text-ink mb-6 inline-block">
       ← Alla fastigheter
     </a>
     <p class="text-xs uppercase tracking-widest text-ink-muted mb-2">

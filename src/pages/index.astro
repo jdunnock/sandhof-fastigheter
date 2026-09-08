@@ -4,7 +4,7 @@ import PropertyCard from '../components/PropertyCard.astro'
 import { fetchPublicProperties, resolveImageUrl } from '../lib/images'
 
 const allProperties = await fetchPublicProperties()
-const featuredWithImages = allProperties.slice(0, 3).map(p => ({
+const propertiesWithImages = allProperties.map(p => ({
   property: p,
   heroImageUrl: p.gallery[0] ? resolveImageUrl(p.gallery[0].url) : '',
 }))
@@ -74,10 +74,10 @@ const tenantValues = [
         Vi äger och sköter sex centralt belägna fastigheter i Skövde. Med lång erfarenhet och ett personligt engagemang i varje byggnad.
       </p>
       <div class="flex flex-wrap gap-4">
-        <a href="/fastigheter" class="px-6 py-3 bg-white text-ink text-sm font-medium rounded hover:bg-cream transition-colors">
+        <a href="#fastigheter" class="px-6 py-3 bg-white text-ink text-sm font-medium rounded hover:bg-cream transition-colors">
           Våra fastigheter
         </a>
-        <a href="/om-oss" class="px-6 py-3 border border-white/50 text-white text-sm font-medium rounded hover:border-white transition-colors">
+        <a href="#om-oss" class="px-6 py-3 border border-white/50 text-white text-sm font-medium rounded hover:border-white transition-colors">
           Om oss
         </a>
       </div>
@@ -133,21 +133,31 @@ const tenantValues = [
   </script>
 
   <!-- Properties -->
-  <section class="max-w-5xl mx-auto px-6 py-16 border-t border-cream-border">
+  <section id="fastigheter" class="max-w-5xl mx-auto px-6 py-16 border-t border-cream-border scroll-mt-16">
     <p class="text-xs uppercase tracking-widest text-ink-muted mb-3">Sex fastigheter i Skövde</p>
     <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ink mb-10">Välskötta byggnader med karaktär</h2>
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {featuredWithImages.map(({ property, heroImageUrl }) => <PropertyCard property={property} heroImageUrl={heroImageUrl} />)}
+      {propertiesWithImages.map(({ property, heroImageUrl }) => <PropertyCard property={property} heroImageUrl={heroImageUrl} />)}
     </div>
-    <div class="mt-10">
-      <a href="/fastigheter" class="text-sm font-medium text-forest underline underline-offset-2 hover:opacity-70">
-        Se alla fastigheter →
-      </a>
+  </section>
+
+  <!-- About -->
+  <section id="om-oss" class="bg-cream-dark py-20 scroll-mt-16">
+    <div class="max-w-5xl mx-auto px-6 grid sm:grid-cols-[1fr_2fr] gap-8 sm:gap-16">
+      <div>
+        <p class="text-xs uppercase tracking-widest text-ink-muted mb-3">Om oss</p>
+        <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ink">Nära fastigheterna och förvaltningen</h2>
+      </div>
+      <div class="space-y-5 text-ink-muted leading-relaxed max-w-2xl">
+        <p>Sandhof Fastigheter är ett privatägt fastighetsbolag i Skövde. Vi äger och förvaltar fastigheter med centrala lägen i staden.</p>
+        <p>Vårt arbete är personligt och långsiktigt. Vi finns nära både fastigheterna och den löpande förvaltningen.</p>
+        <p>Fokus ligger på att ta hand om fastigheterna över tid. Det är ett arbetssätt som bygger på närvaro och kontinuitet.</p>
+      </div>
     </div>
   </section>
 
   <!-- Principles -->
-  <section class="bg-cream-dark py-20 mt-8">
+  <section class="py-20">
     <div class="max-w-5xl mx-auto px-6">
       <p class="text-xs uppercase tracking-widest text-ink-muted mb-3">Hur vi tänker</p>
       <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-ink mb-12">Tre saker vi tror på som fastighetsägare</h2>
@@ -198,7 +208,7 @@ const tenantValues = [
       <a href="/kontakt" class="px-6 py-3 bg-forest text-white text-sm font-medium rounded hover:opacity-90 transition-opacity">
         Skicka intresseanmälan
       </a>
-      <a href="/fastigheter" class="px-6 py-3 border border-cream-border text-ink text-sm font-medium rounded hover:border-ink-muted transition-colors">
+      <a href="#fastigheter" class="px-6 py-3 border border-cream-border text-ink text-sm font-medium rounded hover:border-ink-muted transition-colors">
         Se våra fastigheter
       </a>
     </div>
