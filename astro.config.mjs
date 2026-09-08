@@ -3,7 +3,7 @@ import tailwind from '@astrojs/tailwind'
 import node from '@astrojs/node'
 
 export default defineConfig({
-  site: 'https://sandhoffastigheter.se',
+  site: 'https://sandhof.se',
   output: 'server',
   adapter: node({ mode: 'standalone' }),
   integrations: [tailwind()],

@@ -115,7 +115,7 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const emailText = [
-    'Ny intresseanmälan via sandhoffastigheter.se',
+    'Ny intresseanmälan via sandhof.se',
     '',
     `Namn: ${name}`,
     `E-post: ${email}`,

@@ -8,7 +8,7 @@ Sandhof-ekosystemet består av två applikationer som samverkar. Alla agenter sk
 - **Typ:** Publik marknadsföringssajt
 - **Stack:** Astro SSR + Tailwind CSS + TypeScript
 - **Hosting:** Railway
-- **URL:** `sandhoffastigheter.se`
+- **URL:** `sandhof.se`
 - **Syfte:** Presentera fastigheter och bolagsprofil för allmänheten
 
 ### sandhof-inside

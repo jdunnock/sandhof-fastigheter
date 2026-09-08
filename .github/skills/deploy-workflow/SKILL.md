@@ -21,7 +21,7 @@ PUBLIC_DELLMANDER_API_URL = https://<dellmander-inside>.railway.app
 SITE_PASSWORD = <lösenord>
 RESEND_API_KEY = <Resend API-nyckel>
 INTEREST_RECIPIENT = rautiaij@gmail.com
-INTEREST_FROM = Sandhof Fastigheter <intresse@sandhoffastigheter.se>
+INTEREST_FROM = Sandhof Fastigheter <intresse@sandhof.se>
 ```
 ⚠️ `PUBLIC_DELLMANDER_API_URL` bakas in vid **build-tid**. En ändring kräver ny deploy.
 ⚠️ `SITE_PASSWORD` läses vid runtime — räcker med omstart/redeploy.
@@ -44,5 +44,5 @@ INTEREST_FROM = Sandhof Fastigheter <intresse@sandhoffastigheter.se>
 Railway dashboard → välj tidigare deployment → "Redeploy".
 
 ## Domän
-Produktionsdomän: `sandhoffastigheter.se`
+Produktionsdomän: `sandhof.se`
 Uppdatera `site` i `astro.config.mjs` vid byte av domän.
