@@ -18,6 +18,7 @@ const isHome = currentPath === '/'
     <a
       href="/"
       class={isHome ? 'font-serif font-semibold text-white tracking-tight' : 'font-serif font-semibold text-ink tracking-tight'}
+      data-nav-tone={isHome ? 'text-white' : undefined}
     >
       Sandhof Fastigheter
     </a>
@@ -32,6 +33,7 @@ const isHome = currentPath === '/'
                   ? 'text-ink font-medium'
                   : 'text-ink-muted hover:text-ink'
               }`}
+          data-nav-tone={isHome ? 'text-white/80' : undefined}
         >
           {link.label}
         </a>
@@ -40,56 +42,96 @@ const isHome = currentPath === '/'
     <!-- Mobile menu button -->
     <button
       id="mobile-menu-btn"
-      class={isHome ? 'sm:hidden p-2 text-white' : 'sm:hidden p-2 text-ink-muted'}
+      class={isHome
+        ? 'sm:hidden grid size-10 place-items-center text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest'
+        : 'sm:hidden grid size-10 place-items-center text-ink-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest'}
       aria-label="Öppna meny"
+      aria-controls="mobile-menu"
+      aria-expanded="false"
+      data-nav-tone={isHome ? 'text-white' : undefined}
     >
-      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <svg id="menu-open-icon" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
         <line x1="3" y1="6" x2="21" y2="6"/>
         <line x1="3" y1="12" x2="21" y2="12"/>
         <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+      <svg id="menu-close-icon" class="hidden" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+        <line x1="5" y1="5" x2="19" y2="19"/>
+        <line x1="19" y1="5" x2="5" y2="19"/>
       </svg>
     </button>
   </div>
   <!-- Mobile menu -->
   <div
     id="mobile-menu"
-    class="hidden sm:hidden border-t border-cream-border bg-cream-dark"
+    class="hidden absolute inset-x-0 top-full sm:hidden border-y border-cream-border bg-cream-dark shadow-lg"
   >
-    {navLinks.map(link => (
+    <nav class="px-6 py-2" aria-label="Mobil navigering">
+    {navLinks.map((link, index) => (
       <a
         href={link.href}
-        class="block px-6 py-3 text-ink hover:bg-cream"
+        class:list={[
+          'flex min-h-12 items-center text-base font-medium text-ink transition-colors hover:text-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-forest',
+          index < navLinks.length - 1 && 'border-b border-cream-border',
+        ]}
       >
         {link.label}
       </a>
     ))}
+    </nav>
   </div>
 </header>
 
 <script>
-  const btn = document.getElementById('mobile-menu-btn')
+  const btn = document.querySelector<HTMLButtonElement>('#mobile-menu-btn')
   const menu = document.getElementById('mobile-menu')
-  btn?.addEventListener('click', () => menu?.classList.toggle('hidden'))
+  const openIcon = document.getElementById('menu-open-icon')
+  const closeIcon = document.getElementById('menu-close-icon')
+  const nav = document.getElementById('main-nav')
+  let menuOpen = false
+
+  const updateNav = () => {
+    if (!nav?.classList.contains('fixed')) return
+
+    const opaque = menuOpen || window.scrollY > window.innerHeight * 0.6
+    nav.style.background = opaque ? 'rgba(245,241,232,0.97)' : ''
+    nav.style.backdropFilter = opaque ? 'blur(8px)' : ''
+    nav.style.borderBottom = opaque ? '1px solid rgba(0,0,0,0.08)' : ''
+
+    nav.querySelectorAll<HTMLElement>('[data-nav-tone]').forEach(element => {
+      element.classList.remove('text-white', 'text-white/80', 'text-ink')
+      element.classList.add(opaque ? 'text-ink' : element.dataset.navTone ?? 'text-white')
+    })
+  }
+
+  const setMenuOpen = (open: boolean) => {
+    menuOpen = open
+    menu?.classList.toggle('hidden', !open)
+    openIcon?.classList.toggle('hidden', open)
+    closeIcon?.classList.toggle('hidden', !open)
+    btn?.setAttribute('aria-expanded', String(open))
+    btn?.setAttribute('aria-label', open ? 'Stäng meny' : 'Öppna meny')
+    updateNav()
+  }
+
+  btn?.addEventListener('click', () => setMenuOpen(!menuOpen))
+  menu?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenuOpen(false)))
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && menuOpen) {
+      setMenuOpen(false)
+      btn?.focus()
+    }
+  })
+
+  document.addEventListener('click', event => {
+    if (menuOpen && nav && event.target instanceof Node && !nav.contains(event.target)) {
+      setMenuOpen(false)
+    }
+  })
 
   // On homepage: turn nav opaque when scrolled past the hero
-  const nav = document.getElementById('main-nav')
   if (nav && nav.classList.contains('fixed')) {
-    const makeOpaque = () => {
-      const scrolled = window.scrollY > window.innerHeight * 0.6
-      nav.style.background = scrolled ? 'rgba(245,241,232,0.97)' : ''
-      nav.style.backdropFilter = scrolled ? 'blur(8px)' : ''
-      nav.style.borderBottom = scrolled ? '1px solid rgba(0,0,0,0.08)' : ''
-      // Switch text colors
-      nav.querySelectorAll('a, button').forEach(el => {
-        if (scrolled) {
-          el.classList.remove('text-white', 'text-white/80')
-          el.classList.add('text-ink')
-        } else {
-          el.classList.remove('text-ink')
-          el.classList.add(el.tagName === 'A' ? 'text-white/80' : 'text-white')
-        }
-      })
-    }
-    window.addEventListener('scroll', makeOpaque, { passive: true })
+    window.addEventListener('scroll', updateNav, { passive: true })
   }
 </script>
